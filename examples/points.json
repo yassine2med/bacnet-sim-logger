@@ -1,0 +1,6 @@
+[
+  {"name": "BLDGA.AHU01.SAT", "object_type": "analogInput", "instance": 1, "units": "degF", "base": 62, "amplitude": 3, "noise": 0.4},
+  {"name": "BLDGA.AHU01.RAT", "object_type": "analogInput", "instance": 2, "units": "degF", "base": 73, "amplitude": 2, "noise": 0.3},
+  {"name": "BLDGA.AHU01.DMPR_POS", "object_type": "analogOutput", "instance": 1, "units": "percent", "base": 40, "amplitude": 25, "noise": 1.5},
+  {"name": "BLDGA.AHU01.FAN_STS", "object_type": "binaryInput", "instance": 1}
+]
