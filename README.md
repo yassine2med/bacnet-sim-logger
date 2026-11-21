@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/banner.svg" alt="bacnet-sim-logger" width="100%"></p>
+
 # bacnet-sim-logger
 
 [![CI](https://github.com/yassine2med/bacnet-sim-logger/actions/workflows/ci.yml/badge.svg)](https://github.com/yassine2med/bacnet-sim-logger/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%2B-3776ab) ![License](https://img.shields.io/badge/license-MIT-8fb08a)
