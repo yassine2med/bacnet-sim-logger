@@ -1,6 +1,14 @@
 # bacnet-sim-logger
 
+[![CI](https://github.com/yassine2med/bacnet-sim-logger/actions/workflows/ci.yml/badge.svg)](https://github.com/yassine2med/bacnet-sim-logger/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%2B-3776ab) ![License](https://img.shields.io/badge/license-MIT-8fb08a)
+
 Trend data is the raw material for commissioning checks, energy reviews and fault detection, but a facility team often cannot practice on a live building. This small tool samples a list of BACnet style points on a fixed step and writes the readings to a CSV file. The default source is a deterministic simulator, so anyone can generate realistic looking trend data on a laptop. A thin adapter for a BAC0 connection is included for a real device.
+
+![Screenshot](docs/screenshot.png)
+
+## What it is for
+
+Trend data is the raw material for commissioning checks, energy reviews and fault detection, but a facility team often cannot practice on a live building. Controls technicians, building engineers and trainees use this tool to generate realistic trend data on a laptop. They get a CSV of timestamped readings for air handler temperatures, damper position and fan status that can be used to test charts, scripts and fault rules.
 
 ## Install
 
@@ -10,7 +18,21 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-## Usage
+## How to use
+
+| I want to | Command |
+|---|---|
+| Log simulated points to a CSV (6 rounds by default) | `python -m bacnet_logger --points examples/points.json --out readings.csv` |
+| Set the number of rounds | `--samples 3` |
+| Set the seconds between rounds (default 600) | `--interval 300` |
+| Set the first timestamp (default 2026-07-01T06:00) | `--start 2026-07-01T06:00` |
+| Change the simulator seed (default 1) so the data differs | `--seed 7` |
+| Really wait the interval between rounds | `--live` |
+| Show help | `python -m bacnet_logger --help` |
+
+The sample points in `examples/points.json` are invented (Building A, AHU-01).
+
+Example:
 
 ```
 python -m bacnet_logger --points examples/points.json --out readings.csv --samples 3
@@ -40,9 +62,7 @@ timestamp,point,value,units
 2026-07-01T06:20:00,BLDGA.AHU01.FAN_STS,False,
 ```
 
-Options: `--interval` seconds per step (default 600), `--start` first timestamp, `--seed` simulator seed, `--live` wait the interval between rounds. The sample points in `examples/points.json` are invented (Building A, AHU-01).
-
-## How the logic works
+## How it works
 
 - `points.py` loads a JSON list of points: name, BACnet object type, instance, units, and simulator settings (base, amplitude, noise). It rejects empty files, unknown object types and duplicate names.
 - A source has one method, `read(point, when)`. `SimulatedSource` returns `base + amplitude * sin(daily cycle) + Gaussian noise`; binary points are on from 07:00 to 18:00. The seed makes runs repeatable.
